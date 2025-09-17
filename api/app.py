@@ -78,3 +78,20 @@ async def delete_order(order_id: str):
         raise HTTPException(status_code=404, detail="Order not found")
     del orders_db[order_id]
     return {"message": "Order deleted successfully"}
+
+
+@app.post("/orders/bulk/", response_model=List[Order])
+async def create_bulk_orders(orders: List[dict]):
+    created_orders = []
+    for order_data in orders:
+        order = Order(
+            id=str(uuid.uuid4()),
+            customer_name=order_data['customer_name'],
+            order_items=order_data['order_items'],
+            total_amount=order_data['total_amount'],
+            status="pending",
+            created_at=datetime.now()
+        )
+        orders_db[order.id] = order
+        created_orders.append(order)
+    return created_orders
