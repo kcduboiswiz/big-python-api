@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    uses: kcduboiswiz/.github/.github/workflow-templates/wiz-docker.yml@main
+    uses: kcduboiswiz/.github/.github/workflows/wiz-docker.yml@main
     with:
       image_name: kcduboiswiz/big-python-api
       registry_url: docker.io
